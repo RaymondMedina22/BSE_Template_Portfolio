@@ -1,15 +1,17 @@
 ﻿# Raspberry Pi Ball Tracking Robot
-This will serve as a brief description of your project. Limit this to three sentences because it can become overly long at that point. This copy should draw the user in and make she/him want to read more.
+The robot uses computer vision in order to identify the color of the ball using a ultrasonic sensor in order to go towards the ball explain sensor and raspberry pi 
+
 
 | **Engineer** | **School** | **Area of Interest** | **Grade** |
 |:--:|:--:|:--:|:--:|
 | Raymond M| Current Highschool | Mechanical Engineering | Incoming Senior
 
 ![Headstone Image](https://user-images.githubusercontent.com/86113507/124283036-734ca400-db19-11eb-981c-386359f8b74b.jpeg)
+![Headstone Image](https://cdn-shop.adafruit.com/970x728/4296-11.jpg)
+
 
   
 # Final Milestone
-
 
 [![Final Milestone](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSM1xRv0qXW09rSO4AMSZVJTaAIfPPQ2kDNuw&usqp=CAU){:target="_blank" rel="noopener"}
 
@@ -28,6 +30,10 @@ My first milestone was setting up the 4 motors use for my robot making sure they
 
 # Presentation
 [![Final Presentation ](https://res.cloudinary.com/marcomontalbano/image/upload/v1625231891/video_to_markdown/images/youtube--iUbbWPSFT7o-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://www.youtube.com/watch?v=iUbbWPSFT7o "Final Presentation "){:target="_blank" rel="noopener"}
+
+# Reflection
+
+
 
 # Cricuit Diagram of Raspberry connected to Ultrasonic sensor
 
