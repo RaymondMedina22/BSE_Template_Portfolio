@@ -1,6 +1,5 @@
 ﻿# Raspberry Pi Ball Tracking Robot
-The robot uses computer vision in order to identify the color of the ball using a ultrasonic sensor in order to go towards the ball explain sensor and raspberry pi 
-
+Robot uses computer vision to identify the color of the ball alongside using a ultrasonic sensor to determine the distance of the ball
 
 | **Engineer** | **School** | **Area of Interest** | **Grade** |
 |:--:|:--:|:--:|:--:|
@@ -9,8 +8,6 @@ The robot uses computer vision in order to identify the color of the ball using 
 ![Headstone Image](https://user-images.githubusercontent.com/86113507/124283036-734ca400-db19-11eb-981c-386359f8b74b.jpeg)
 ![Headstone Image](https://cdn-shop.adafruit.com/970x728/4296-11.jpg)
 
-
-  
 # Final Milestone
 
 [![Final Milestone](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSM1xRv0qXW09rSO4AMSZVJTaAIfPPQ2kDNuw&usqp=CAU){:target="_blank" rel="noopener"}
@@ -66,7 +63,7 @@ My first milestone was setting up the 4 motors use for my robot making sure they
     GPIO.setup(GPIO_TRIGGER,GPIO.OUT)  # Trigger
     GPIO.setup(GPIO_ECHO,GPIO.IN)      # Echo
     GPIO.setup(LED_PIN,GPIO.OUT)
-    # Set trigger to False (Low)
+    # Set trigger to False
     GPIO.output(GPIO_TRIGGER, False)
 
       def sonar(GPIO_TRIGGER,GPIO_ECHO):
@@ -78,7 +75,7 @@ My first milestone was setting up the 4 motors use for my robot making sure they
       #Set trigger to False (Low)
       GPIO.output(GPIO_TRIGGER, False)
       
-      # Allow module to settle
+      # Sensor setup
       time.sleep(0.01)
       #while distance > 5:
       #Send 10us pulse to trigger
@@ -96,13 +93,13 @@ My first milestone was setting up the 4 motors use for my robot making sure they
       # multiplied by the speed of sound (cm/s)
       distance = elapsed * 34000
      
-      # That was the distance there and back so halve the value
+      # Distance 
       distance = distance / 2
      
       print ("Distance : %.1f" % distance)
       # Reset GPIO settings
       return distance
-
+    #Motor setup 
     GPIO.setup(MOTOR1B, GPIO.OUT)
     GPIO.setup(MOTOR1E, GPIO.OUT)
 
@@ -139,8 +136,8 @@ My first milestone was setting up the 4 motors use for my robot making sure they
       GPIO.output(MOTOR2E,GPIO.LOW)
       GPIO.output(MOTOR2B,GPIO.LOW)
      
-     #Image analysis work
-    def segment_colour(frame):    #returns only the red colors in the frame
+    #Image Analysis
+    def segment_colour(frame):  
     hsv_roi =  cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
     mask_1 = cv2.inRange(hsv_roi, np.array([160, 160,10]), np.array([190,255,255]))
     ycr_roi=cv2.cvtColor(frame,cv2.COLOR_BGR2YCrCb)
@@ -154,7 +151,7 @@ My first milestone was setting up the 4 motors use for my robot making sure they
     #cv2.imshow('mask',mask)
     return mask
 
-    def find_blob(blob): #returns the red colored circle
+    def find_blob(blob): 
     largest_contour=0
     cont_index=0
     contours, hierarchy = cv2.findContours(blob, cv2.RETR_CCOMP, cv2.CHAIN_APPROX_SIMPLE)
@@ -178,17 +175,17 @@ My first milestone was setting up the 4 motors use for my robot making sure they
     hist=cv2.calcHist([hsv_img],[0],None,[50],[0,255])
     return hist
 
-    #CAMERA CAPTURE
+    #Camera Setup
     #initialize the camera and grab a reference to the raw camera capture
     camera = PiCamera()
     camera.resolution = (160, 128)
     camera.framerate = 16
     rawCapture = PiRGBArray(camera, size=(160, 120))
  
-    # allow the camera to warmup
+    # Camera start up
     time.sleep(0.001)
  
-    # capture frames from the camera
+    # Camera Analysis
     for image in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
       #grab the raw NumPy array representing the image, then initialize the timestamp and occupied/unoccupied text
       frame = image.array
@@ -218,7 +215,8 @@ My first milestone was setting up the 4 motors use for my robot making sure they
             print (centre_x,centre_y)
       initial=400
       flag=0
-      GPIO.output(LED_PIN,GPIO.LOW)          
+      GPIO.output(LED_PIN,GPIO.LOW)   
+      #Motor Movement 
       if(found==0):
             #if the ball is not found and the last time it sees ball in which direction, it will start to rotate in that direction
             if flag==0:
@@ -233,8 +231,6 @@ My first milestone was setting up the 4 motors use for my robot making sure they
       elif(found==1):
             if(area<initial):
                   if(distanceC<10):
-                        #if ball is too far but it detects something in front of it,then it avoid it and reaches the ball.                       
-                        #otherwise it move forward
                         forward()
                         time.sleep(0.00625)
             elif(area>=initial):
@@ -272,4 +268,4 @@ My first milestone was setting up the 4 motors use for my robot making sure they
             break
             
 
-    GPIO.cleanup() #free all the GPIO pins
+    GPIO.cleanup() 
