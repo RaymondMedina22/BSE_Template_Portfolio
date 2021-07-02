@@ -5,7 +5,8 @@ This will serve as a brief description of your project. Limit this to three sent
 |:--:|:--:|:--:|:--:|
 | Raymond M| Current Highschool | Mechanical Engineering | Incoming Senior
 
-![Headstone Image](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSM1xRv0qXW09rSO4AMSZVJTaAIfPPQ2kDNuw&usqp=CAU)
+![Headstone Image](https://user-images.githubusercontent.com/86113507/124283036-734ca400-db19-11eb-981c-386359f8b74b.jpeg)
+
   
 # Final Milestone
 
@@ -15,7 +16,7 @@ This will serve as a brief description of your project. Limit this to three sent
 # Second Milestone
 
 
-[![Third Milestone](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSM1xRv0qXW09rSO4AMSZVJTaAIfPPQ2kDNuw&usqp=CAU){:target="_blank" rel="noopener"}
+[![Second Milestone](https://res.cloudinary.com/marcomontalbano/image/upload/v1625231523/video_to_markdown/images/youtube--hLWgj4PqETg-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://www.youtube.com/watch?v=hLWgj4PqETg&t=1s "Second Milestone"){:target="_blank" rel="noopener"}
 # First Milestone
   
 
@@ -24,44 +25,45 @@ My first milestone was setting up the 4 motors use for my robot making sure they
 
 [![First Milestone](https://res.cloudinary.com/marcomontalbano/image/upload/v1624628589/video_to_markdown/images/youtube--I0sU-SC-8pI-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://www.youtube.com/watch?v=I0sU-SC-8pI "First Milestone"){:target="_blank" rel="noopener"}
 
-# Cricuit Diagram
+
+# Presentation
+[![Final Presentation ](https://res.cloudinary.com/marcomontalbano/image/upload/v1625231891/video_to_markdown/images/youtube--iUbbWPSFT7o-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://www.youtube.com/watch?v=iUbbWPSFT7o "Final Presentation "){:target="_blank" rel="noopener"}
+
+# Cricuit Diagram of Raspberry connected to Ultrasonic sensor
 
 ![Image 6-25-21 at 11 08 AM](https://user-images.githubusercontent.com/86113507/123448241-b1d9e000-d5a8-11eb-912a-e35c41b8e109.jpg)
 # Code
+    from picamera.array import PiRGBArray     #As there is a resolution problem in raspberry pi, will not be able to capture frames by            VideoCapture
+    from picamera import PiCamera
+    import RPi.GPIO as GPIO
+    import time
+    import cv2
+    import cv2 as cv
+    import numpy as np
 
-# import the necessary packages
-from picamera.array import PiRGBArray     #As there is a resolution problem in raspberry pi, will not be able to capture frames by VideoCapture
-from picamera import PiCamera
-import RPi.GPIO as GPIO
-import time
-import cv2
-import cv2 as cv
-import numpy as np
+    #hardware work
+    GPIO.setmode(GPIO.BOARD)
+    GPIO.setwarnings(False)
 
-#hardware work
-GPIO.setmode(GPIO.BOARD)
-GPIO.setwarnings(False)
+    GPIO_TRIGGER = 29     # Ultrasonic sensor
+    GPIO_ECHO = 31
 
-GPIO_TRIGGER = 29     # Ultrasonic sensor
-GPIO_ECHO = 31
+    MOTOR1B= 13 #Right Motor
+    MOTOR1E= 15
 
-MOTOR1B= 13 #Right Motor
-MOTOR1E= 15
+    MOTOR2B= 5  #Left Motor
+    MOTOR2E= 7
 
-MOTOR2B= 5  #Left Motor
-MOTOR2E= 7
+    LED_PIN= 33  
 
-LED_PIN= 33  
+    # Set pins as output and input
+    GPIO.setup(GPIO_TRIGGER,GPIO.OUT)  # Trigger
+    GPIO.setup(GPIO_ECHO,GPIO.IN)      # Echo
+    GPIO.setup(LED_PIN,GPIO.OUT)
+    # Set trigger to False (Low)
+    GPIO.output(GPIO_TRIGGER, False)
 
-# Set pins as output and input
-GPIO.setup(GPIO_TRIGGER,GPIO.OUT)  # Trigger
-GPIO.setup(GPIO_ECHO,GPIO.IN)      # Echo
-GPIO.setup(LED_PIN,GPIO.OUT)
-# Set trigger to False (Low)
-GPIO.output(GPIO_TRIGGER, False)
-
-# Allow module to settle
-def sonar(GPIO_TRIGGER,GPIO_ECHO):
+      def sonar(GPIO_TRIGGER,GPIO_ECHO):
       start=0
       stop=0
       # Set pins as output and input
@@ -95,44 +97,44 @@ def sonar(GPIO_TRIGGER,GPIO_ECHO):
       # Reset GPIO settings
       return distance
 
-GPIO.setup(MOTOR1B, GPIO.OUT)
-GPIO.setup(MOTOR1E, GPIO.OUT)
+    GPIO.setup(MOTOR1B, GPIO.OUT)
+    GPIO.setup(MOTOR1E, GPIO.OUT)
 
-GPIO.setup(MOTOR2B, GPIO.OUT)
-GPIO.setup(MOTOR2E, GPIO.OUT)
+    GPIO.setup(MOTOR2B, GPIO.OUT)
+    GPIO.setup(MOTOR2E, GPIO.OUT)
 
-def forward():
+    def forward():
       GPIO.output(MOTOR1B, GPIO.LOW)
       GPIO.output(MOTOR1E, GPIO.HIGH)
       GPIO.output(MOTOR2B, GPIO.LOW)
       GPIO.output(MOTOR2E, GPIO.HIGH)
      
-def reverse():
+    def reverse():
       GPIO.output(MOTOR1B, GPIO.HIGH)
       GPIO.output(MOTOR1E, GPIO.LOW)
       GPIO.output(MOTOR2B, GPIO.HIGH)
       GPIO.output(MOTOR2E, GPIO.LOW)
      
-def rightturn():
+    def rightturn():
       GPIO.output(MOTOR1B,GPIO.HIGH)
       GPIO.output(MOTOR1E,GPIO.LOW)
       GPIO.output(MOTOR2B,GPIO.LOW)
       GPIO.output(MOTOR2E,GPIO.HIGH)
      
-def leftturn():
+    def leftturn():
       GPIO.output(MOTOR1B,GPIO.LOW)
       GPIO.output(MOTOR1E,GPIO.HIGH)
       GPIO.output(MOTOR2B,GPIO.HIGH)
       GPIO.output(MOTOR2E,GPIO.LOW)
 
-def stop():
+    def stop():
       GPIO.output(MOTOR1E,GPIO.LOW)
       GPIO.output(MOTOR1B,GPIO.LOW)
       GPIO.output(MOTOR2E,GPIO.LOW)
       GPIO.output(MOTOR2B,GPIO.LOW)
      
-#Image analysis work
-def segment_colour(frame):    #returns only the red colors in the frame
+     #Image analysis work
+    def segment_colour(frame):    #returns only the red colors in the frame
     hsv_roi =  cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
     mask_1 = cv2.inRange(hsv_roi, np.array([160, 160,10]), np.array([190,255,255]))
     ycr_roi=cv2.cvtColor(frame,cv2.COLOR_BGR2YCrCb)
@@ -146,7 +148,7 @@ def segment_colour(frame):    #returns only the red colors in the frame
     #cv2.imshow('mask',mask)
     return mask
 
-def find_blob(blob): #returns the red colored circle
+    def find_blob(blob): #returns the red colored circle
     largest_contour=0
     cont_index=0
     contours, hierarchy = cv2.findContours(blob, cv2.RETR_CCOMP, cv2.CHAIN_APPROX_SIMPLE)
@@ -164,25 +166,24 @@ def find_blob(blob): #returns the red colored circle
         r = cv2.boundingRect(contours[cont_index])
        
     return r,largest_contour
-
-def target_hist(frame):
+    def target_hist(frame):
     hsv_img=cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
    
     hist=cv2.calcHist([hsv_img],[0],None,[50],[0,255])
     return hist
 
-#CAMERA CAPTURE
-#initialize the camera and grab a reference to the raw camera capture
-camera = PiCamera()
-camera.resolution = (160, 128)
-camera.framerate = 16
-rawCapture = PiRGBArray(camera, size=(160, 120))
+    #CAMERA CAPTURE
+    #initialize the camera and grab a reference to the raw camera capture
+    camera = PiCamera()
+    camera.resolution = (160, 128)
+    camera.framerate = 16
+    rawCapture = PiRGBArray(camera, size=(160, 120))
  
-# allow the camera to warmup
-time.sleep(0.001)
+    # allow the camera to warmup
+    time.sleep(0.001)
  
-# capture frames from the camera
-for image in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
+    # capture frames from the camera
+    for image in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
       #grab the raw NumPy array representing the image, then initialize the timestamp and occupied/unoccupied text
       frame = image.array
       frame = cv2.flip(frame,1)
@@ -265,7 +266,4 @@ for image in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
             break
             
 
-GPIO.cleanup() #free all the GPIO pins
-
-
-[![Third Milestone](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSM1xRv0qXW09rSO4AMSZVJTaAIfPPQ2kDNuw&usqp=CAU)
+    GPIO.cleanup() #free all the GPIO pins
