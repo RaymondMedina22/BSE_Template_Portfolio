@@ -14,29 +14,28 @@ Robot uses computer vision to identify the color of the ball alongside using a u
 
 # Second Milestone
 
+In my second milestone, I was able to complete my base project in which I did this by using a raspberry camera to set up an open cv for the project. I started by setting up the ultrasonic sensor so the robot could determine its distance from the ball and how far it needs to go. After this, it was to set up a code that could bring everything together. First I needed to code cv to identify the ball based on its shape and color, in this case, a red ball. After coding the movement of the motors so the robot would be able to turn correctly based on where the ball is located. On top of this, I include a led light that lights up when the ball is too close. The end result, after putting everything was a robot that could track a red ball 
 
 [![Second Milestone](https://res.cloudinary.com/marcomontalbano/image/upload/v1625231523/video_to_markdown/images/youtube--hLWgj4PqETg-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://www.youtube.com/watch?v=hLWgj4PqETg&t=1s "Second Milestone"){:target="_blank" rel="noopener"}
-# First Milestone
-  
+# First Milestone 
 
-My first milestone was setting up the 4 motors use for my robot making sure they were wired and coded correctly through raspberry pi. First I set up the raspberry OS to the raspberry pi in order to run python. After this, I wired the motor driver to the raspberry making sure the wires were connected to the correct pins. Which is important when coding the movement of the motors. After this, I wired the motor driver to the 4 motors and 4 pack battery holder as a power source for the motor driver. After setting up the wiring I used python in pi to coded the  motors to be able to go forward all at the same time.
-
+My first milestone was setting up the four motors used for my robot making sure they were wired and coded correctly through raspberry pi. First I set up the raspberry OS to the raspberry pi to run python. After this, I wired the motor driver to the raspberry making sure the wires were connected to the correct pins. Which is important when coding the movement of the motors. After this, I wired the motor driver to the four motors and four pack battery holder as a power source for the motor driver. After setting up the wiring I used python in pi to coded the motors to be able to go forward all at the same time.
 
 [![First Milestone](https://res.cloudinary.com/marcomontalbano/image/upload/v1624628589/video_to_markdown/images/youtube--I0sU-SC-8pI-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://www.youtube.com/watch?v=I0sU-SC-8pI "First Milestone"){:target="_blank" rel="noopener"}
 
-
 # Presentation
+
 [![Final Presentation ](https://res.cloudinary.com/marcomontalbano/image/upload/v1625231891/video_to_markdown/images/youtube--iUbbWPSFT7o-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://www.youtube.com/watch?v=iUbbWPSFT7o "Final Presentation "){:target="_blank" rel="noopener"}
 
 # Reflection
 
-
+After completing this project it showed me that there are many challenges that are faced when trying to do engineering from mechanical problems to having to do code debugging. However, the challenges that are faced when engineering are enjoyable and fun, essential the excitement that is felt when your solving your problem.
 
 # Cricuit Diagram of Raspberry connected to Ultrasonic sensor
 
 ![Image 6-25-21 at 11 08 AM](https://user-images.githubusercontent.com/86113507/123448241-b1d9e000-d5a8-11eb-912a-e35c41b8e109.jpg)
 # Code
-    from picamera.array import PiRGBArray     #As there is a resolution problem in raspberry pi, will not be able to capture frames by            VideoCapture
+    from picamera.array import PiRGBArray  
     from picamera import PiCamera
     import RPi.GPIO as GPIO
     import time
@@ -217,17 +216,16 @@ My first milestone was setting up the 4 motors use for my robot making sure they
       flag=0
       GPIO.output(LED_PIN,GPIO.LOW)   
       #Motor Movement 
-      if(found==0):
-            #if the ball is not found and the last time it sees ball in which direction, it will start to rotate in that direction
-            if flag==0:
-                  rightturn()
-                  time.sleep(0.05)
-            else:
-                  leftturn()
-                  time.sleep(0.05)
-            stop()
-            time.sleep(0.0125)
-     
+      if(found==0):#If the ball is not found
+        flag==0
+        stop()
+        time.sleep(0.05)
+               if (distanceC<10:    
+                    stop()
+                    time.sleep(1)
+                    else:
+                        forward()
+                        flag=0            
       elif(found==1):
             if(area<initial):
                   if(distanceC<10):
@@ -237,13 +235,16 @@ My first milestone was setting up the 4 motors use for my robot making sure they
                   initial2=6700
                   if(area<initial2):
                         if(distanceC>10):
-                              #it brings coordinates of ball to center of camera's imaginary axis.
-                              if(centre_x<=-20 or centre_x>=20):
-                                    if(centre_x<0):
+                              flag=0
+                              forward()
+                              time.sleep(0.025)
+                              #Center ball to camera's imaginary axis.
+                              if(centre_x<=-20):
+                                    if(centre_x>=-20 or centre_x>=20):
                                           flag=0
                                           rightturn()
                                           time.sleep(0.025)
-                                    elif(centre_x>0):
+                                    elif(centre_x>=-20 or centre_x>=20):
                                           flag=1
                                           leftturn()
                                           time.sleep(0.025)
