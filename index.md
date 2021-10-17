@@ -10,10 +10,6 @@ Robot uses computer vision to identify the color of the ball alongside using a u
 
 # Final Milestone
 
-[![Final Milestone](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSM1xRv0qXW09rSO4AMSZVJTaAIfPPQ2kDNuw&usqp=CAU){:target="_blank" rel="noopener"}
-
-# Second Milestone
-
 In my second milestone, I was able to complete my base project in which I did this by using a raspberry camera to set up an open cv for the project. I started by setting up the ultrasonic sensor so the robot could determine its distance from the ball and how far it needs to go. After this, it was to set up a code that could bring everything together. First I needed to code cv to identify the ball based on its shape and color, in this case, a red ball. After coding the movement of the motors so the robot would be able to turn correctly based on where the ball is located. On top of this, I include a led light that lights up when the ball is too close. The end result, after putting everything was a robot that could track a red ball 
 
 [![Second Milestone](https://res.cloudinary.com/marcomontalbano/image/upload/v1625231523/video_to_markdown/images/youtube--hLWgj4PqETg-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://www.youtube.com/watch?v=hLWgj4PqETg&t=1s "Second Milestone"){:target="_blank" rel="noopener"}
